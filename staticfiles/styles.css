@@ -1,0 +1,372 @@
+html,body{
+    height:100vh;
+    margin:0;
+    padding:0;
+    background-color: rgb(0, 0, 0);
+    overflow-x: hidden;
+}
+#butt{
+    margin-top: 10px;
+    visibility: hidden;
+    cursor:pointer;
+   
+
+}
+
+a{
+    text-decoration: none;
+    color:white;
+}
+
+
+
+.nav{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(0, 0, 0);
+    justify-content: space-between;
+    align-items:center;
+    opacity:1;
+    padding:1px;
+    transition: 0.3s ease;
+    width: 100%;
+    height: 50px;
+
+}
+
+.leftelements{
+    display: flex;
+    align-items: center;
+}
+
+.center{
+    flex:1;
+    margin-right:150px;
+    text-align:center;
+}
+
+#coffee{
+    height:60px;
+   margin-top:5px;
+}
+
+#onlineuser{
+    margin-left: 0px;
+    border:none;
+    background-color: transparent;
+    color:white;
+    cursor:pointer;
+
+}
+
+.list{
+    color:white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    padding:15px;
+    margin-left: 50px;
+    text-decoration: none;
+    opacity:1;
+    transition: 0.3s ease;
+    user-select: none;
+
+
+}
+
+
+
+h{
+    color:white;
+}
+
+
+
+#container{
+    width:100%;
+    height:86.5%;
+    display: flex;
+    
+}
+.usercontainer{
+    width:100%;
+    position:absolute;
+    height: 86%;
+    z-index: 3;
+}
+
+#online{
+    width:20%;
+    height:85vh;
+    border:solid 1px white;
+    margin-top:1px;
+    left:-800px;
+    border-radius: 10px;
+    background-color: black;
+    position: absolute;
+    z-index: 3;
+    transition: 250ms;
+
+}
+#onlinenav{
+    background-color: rgb(73, 72, 72);
+    display: flex;
+    justify-content: end;
+    height:40px;
+    opacity:0.7;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+    
+}
+#close{
+    background-color: red;
+    border: none;
+    color:white;
+    width:30px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-left: 10x;
+    cursor: pointer;
+}
+
+#chatspace{
+    background-color: transparent;
+    width:100%;
+    overflow-y:scroll;
+
+}
+
+#onlineusertext{
+    text-align: center;
+    color: rgb(187, 184, 184);
+}
+/* 
+#inputspace {
+    positon: relative;
+    width: 100%;
+    margin-top: 20px; 
+    
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+#mainarea {
+    width: calc(50% - 40px); 
+    height: 50px; 
+    resize: none;
+    padding-right: 40px; 
+    background-color: rgb(58, 65, 58);
+    border:1px solid black;
+}
+
+#send {
+    position: absolute;
+    bottom: 10px; 
+    right: 10px; 
+    height: 30px;
+    width: 30px; 
+} */ 
+
+.input-container {
+
+    position: relative;
+    width: 100%;
+    /* background-color: blue; */
+    width: 1000px;
+    height:70px;
+    overflow:hidden;
+    display: flex;
+    justify-content: center;
+    
+    
+}
+
+#inputspace{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    
+    z-index:2;
+    
+
+}
+
+#mainarea{
+    height: 30px;
+    width:700px;
+    margin-top:5px;
+    border-radius:10px;
+    background-color: rgb(0, 0, 0);
+    border:1px solid rgb(36, 36, 36);
+    resize:none;
+    margin-right: 10px;
+    color:white;
+    padding:10px;
+}
+
+
+
+#send{
+    height:40px;
+    width:40px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border:none;
+    background-color:rgb(19, 231, 72); 
+    cursor:pointer;
+}
+
+
+#messagebox{
+    position:relative;
+    color:white;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: rgb(12, 12, 12) ;
+    /* box-shadow: inset 0 0 10px 5px rgba(46, 46, 46, 0.5); */
+    border-radius: 5px;
+
+}
+
+#messagebox:hover{
+    border: 1px solid rgb(24, 85, 199);
+    /* background-color: rgba(24, 85, 199, 0.014); */
+}
+
+/* Hide the default scrollbar */
+#chatspace::-webkit-scrollbar {
+    width: 0.5em; /* Adjust the width as needed */
+    border-radius: 0.25rem;
+}
+
+/* Track (the background of the scrollbar) */
+#chatspace::-webkit-scrollbar-track {
+    background: #4b4b4b; /* You can set your desired background color */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+#chatspace::-webkit-scrollbar-thumb {
+    background: rgb(158, 158, 158) /* You can set your desired handle color */
+}
+
+/* Handle on hover */
+#chatspace::-webkit-scrollbar-thumb:hover {
+    background: rgb(209, 209, 209);
+}
+
+
+/*message box*/
+.pfp{
+    background-color: white;
+    width:35px;
+    height:35px;
+    border-radius:3px;
+    margin-right: 5px;
+}
+
+#users{
+    height:80%;
+}
+
+.thisuser {
+    display: flex;
+    width: 100%;
+}
+
+.loginstatus {     
+    overflow: hidden;
+    font-size:13px;
+    word-wrap: break-word; /* Break words when they exceed the container */
+}
+
+#userinfo{
+    display: flex;
+}
+
+#on_users{
+    color:white;
+    padding:10px;
+    border: 1px solid grey;
+}
+#username{
+    font-size:18px;
+    margin-left:5px;
+}
+#usertime{
+    margin-left:5px;
+    
+}
+
+#datetime{
+    margin-left:5px;
+    padding:1px;
+    font-size: 13px;
+}
+
+#timebox{
+    padding-left:5px;
+    font-size: 13px;
+}
+#message{
+    font-size: 15px;
+    height:auto;
+    overflow-wrap: break-word;
+    padding:5px;
+    max-width: 100%;
+}
+
+#currentuser{
+    background-color: transparent;
+    /* margin-left:15px; */
+    border:none;
+    cursor:pointer;
+    /* border:1px solid white; */
+    width:40px;
+    height:40px;
+    padding: 3px;
+}
+
+#currentuser img{
+
+    width:40px;
+    height:40px;
+    border-radius: 5px;
+    object-fit: contain;
+    margin-left: 10px;
+    border: 1px solid green;
+}
+
+/* .useroptionbox{
+    border:1px solid white;
+    height:100%;
+
+}
+
+
+.useroption{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top:9%;
+    left:5%;
+    transform:translate(-5%,-9%);
+    z-index:6;
+    background-color: black;
+    height:20px;
+    width:30px;
+
+} */
+
+.logout{
+    background-color: transparent;
+    border:none;
+    margin-left: 25px;
+}
+
+
