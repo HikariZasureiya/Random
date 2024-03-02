@@ -15,4 +15,5 @@ urlpatterns = [
     # re_path(r'^users/(?P<username>[\w.@+-]+)/$', views.profile, name='profile'),
     path('usernamecheck',views.usernamecheck,name='usernamecheck'),
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

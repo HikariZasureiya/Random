@@ -133,6 +133,7 @@ uritemplate==4.1.1
 urllib3==1.26.18
 user-agents==2.2.0
 Werkzeug==2.3.8
+whitenoise==6.6.0
 wsproto==1.2.0
 WTForms==3.1.2
 zipp==3.17.0
