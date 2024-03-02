@@ -36,7 +36,7 @@ User = get_user_model()
 def send_verification_email(user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
-    verification_url = f"http://localhost:8000/verify/{uid}/{token}/"
+    verification_url = f"http://random-uo5k.onrender.com/verify/{uid}/{token}/"
     subject = 'Verify your email'
     message = f'Hello {user.username} Click the link below to verify your email: {verification_url}'
     recipient_email = user.email
