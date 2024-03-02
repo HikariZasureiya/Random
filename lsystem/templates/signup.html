@@ -1,0 +1,127 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block bodystyle %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    body{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height:98vh;
+        flex-direction: column;
+        background-image: linear-gradient(rgb(0, 0, 0),rgb(41, 41, 41)) ;
+    }
+
+</style>
+{% endblock bodystyle %}
+
+<body>
+{% block content %}
+    <div class='followerbox'>
+    </div>
+    <div class='signupbox'>
+
+        <div class='signupform'>
+            <form class='signupform1' method="post">
+                    {% csrf_token %}
+                    <div class="login-field">
+                        
+                        <div class='field'>
+                            {% comment %} {{ form.username.label_tag }} {% endcomment %}
+                            {{ form.username }}
+                            <span class='i' id='i' >&#x26A0; username already exists</span>
+                            {{ form.username.errors }}
+                        </div>
+                
+                        <div class='field'>
+                            {% comment %} {{ form.email.label_tag }} {% endcomment %}
+                            {{ form.email }}
+      
+                            {{ form.email.errors }}
+                        </div>
+                
+                        <div class='field'>
+                            {% comment %} {{ form.password.label_tag }} {% endcomment %}
+                            {{ form.password }}
+                            
+                            <label for="eyeInput">
+                                <img class='eye' src="{% static 'eye-closed.svg' %}">
+                            </label>
+
+                            <input id="eyeInput" class='eyecheck' type="checkbox">
+
+                            {{ form.password.errors }}
+
+                        </div>
+                        <div class='enquiry'>
+                            <h>already have an account? <a href='/login'>Log In</h>
+                        </div>
+
+                        <button type='submit' class='credbutton'>sign up</button>
+                    </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        
+        eyelabel=document.querySelector('.eye');
+        eye=document.querySelector('.eyecheck');
+        passarea=document.getElementById('id_password');
+        
+        eye.addEventListener('click',function(){
+            if(this.checked){
+                eyelabel.src=`{% static "eye-open.svg" %}`;
+                passarea.type='text';
+
+            }
+
+            else{
+                eyelabel.src=`{% static "eye-closed.svg" %}`;
+                passarea.type='password';
+            }
+
+        })
+
+        $(document).ready(function() {
+            $('#id_username').on('input', function() {
+                var username = ($(this).val()).trim();
+        
+                $.ajax({
+                    type: 'GET',
+                    url: 'usernamecheck',
+                    data: {
+                        'username': username
+                    },
+                    success: function(response) {
+                        if (response.available) {
+                            
+                            console.log('Username is available');
+                            $('#i').hide();
+                            $('#id_username').css('border-bottom', '');
+                            $('#id_username').css('color', '');
+
+                        } else {
+                            if(username!==''){
+                                console.log('Username already taken');
+                                $('#i').show();
+                                $('#id_username').css('border-bottom', '1px solid red');
+                                $('#id_username').css('color', 'red'); 
+                        }
+                    }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+
+        </script>
+
+{% endblock %}
+</body>

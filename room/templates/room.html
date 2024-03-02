@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href={% static "styles.css" %}> 
+    <title>modnar</title>
+</head>
+<body>
+
+    
+
+        <div class="nav">
+            <div class='leftelements'>
+            
+                <button id="onlineuser">
+                    <svg width="30" height="20" xmlns="http://www.w3.org/2000/svg">
+                        <!-- First horizontal line -->
+                        <line x1="3" y1="3" x2="27" y2="3" stroke="grey" stroke-width="2"/>
+                        
+                        <!-- Second horizontal line -->
+                        <line x1="3" y1="9" x2="27" y2="9" stroke="grey" stroke-width="2"/>
+                        
+                        <!-- Third horizontal line -->
+                        <line x1="3" y1="15" x2="27" y2="15" stroke="grey" stroke-width="2"/>
+                    </svg>
+                </button> 
+
+                {% if userim.profilepic %}
+
+                <div class='useroptionbox'>
+                    <button id="currentuser">
+                        <img class='buttonpfp' src="..{{userim.profilepic.url}}">
+                </div>
+                {% else %}
+                    <button id="currentuser">
+                        <img src={% static "profile.svg" %}>
+                    </button>
+
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button class='logout' name='logout'>
+                        <img src="{% static "logout.svg" %}">
+                    </button> 
+                </form>  
+            </div>
+
+
+            <div class='center'>
+                <img src={% static "pixilart-drawing.png" %} id="coffee">
+            </div>
+            
+        </div>
+
+    <div id="container">
+        <div id="online">
+            <nav id="onlinenav">
+                <button id="close"><b>X</b></button>
+            </nav>
+
+            <h3 id="onlineusertext">online now</h3>
+
+            <div id="users">
+                
+            </div>
+            
+        </div>
+        <div id="chatspace">
+
+            {% comment %} chats here {% endcomment %}
+
+        </div>
+    </div>
+    <footer id="inputspace">
+        <form method="post" id='messagesend'>
+            {% csrf_token %}
+            <div class="input-container">
+                <textarea placeholder="Send message" id="mainarea" name='mainarea'></textarea>
+                <button id="send" type="submit"><b>></b></button>
+            </div>
+        </form>
+    </footer>
+
+    <script>
+        const usernametext=`{{user.username}}`;
+        
+        const j= `{% url "j" %}`;
+
+        const posturl = '{% url "mainroom" %}';
+
+    </script>
+    <script src={% static "script.js" %}></script>
+
+</body>
+</html>

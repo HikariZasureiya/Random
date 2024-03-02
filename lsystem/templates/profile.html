@@ -1,0 +1,78 @@
+
+{% extends "index.html" %}
+<!DOCTYPE html>
+{% comment %} <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+
+        <style>
+            .userpfp{
+                height:150px;
+                width:150px;
+                border-radius:100px;
+                border:solid 2px black;
+                object-fit:cover;
+            }
+        </style>
+    </head> {% endcomment %}
+        {% block content %}
+            <div class='followerbox'>
+            </div>
+        
+        <div class='userbox'>    
+            <div class='user'>
+                {% if  user.profilepic %}
+                    <img class='userpfp' src="{{user.profilepic.url}}">
+
+                {% else %}
+
+                    <div class='nopfp'>
+                            no pfp
+                    </div>
+                {% endif %}
+
+                {% if user_ver == user.username %}
+                    <button>changebutton</button>
+                    {% endif %}
+                    
+                <div class='username' id='username'>
+                    {{user.username}}
+                    {% if user_ver == user.username %}
+                    <button>changebutton</button>
+                    {% endif %}
+                </div>
+
+                <div class='bio' id='bio'>
+                    <h class='biotext'>{{user.bio}}</h>
+                    {% if user_ver == user.username %}
+                    <button>changebutton</button>
+                    {% endif %}
+
+                </div>
+            </div>
+    
+        </div>
+        {% endblock content %}
+            <script>
+                console.log('yes');
+                const followerbox = document.querySelector('.followerbox');
+    
+                document.addEventListener('mousemove', function(e){
+                    followerbox.style.display='block';
+                    var mouseX = e.clientX - 17;
+                    var mouseY = e.clientY - 13;
+    
+                    followerbox.style.top=mouseY+'px';
+                    followerbox.style.left=mouseX+'px';
+    
+                });
+    
+                
+            </script>
+         
+    </body>

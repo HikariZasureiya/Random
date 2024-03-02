@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='https://fonts.googleapis.com/css?family=Rubik Broken Fax' rel='stylesheet'>
+        {% block bodystyle %}
+        <style>
+            html,body{
+                margin:0;
+                padding:0;
+                background-image: linear-gradient(rgb(0, 0, 0),rgb(41, 41, 41)) ;
+                height:100vh;
+                width:100vw;
+            }
+        </style>
+        {% endblock bodystyle %}
+
+
+        <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    </head>
+       
+    <body>
+
+        {% block  content %}
+        <div class='followerbox'>
+        </div>
+
+        <div class='bigspace'>
+            <div class='blo'>
+                <div class='con'>
+                    <h>RANDOM</h>
+                </div>
+                <h class=>Just a random chatroom</h> 
+                <div class='options'>
+                    <div>
+                        <button class="credbutton" onclick="window.location.href='/signup'">Sign Up</button>
+                    </div>
+                    <div>
+                        <button class="credbutton" onclick="window.location.href='/login'">Log In</button>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class='footer'>
+
+        </footer>
+
+
+        
+
+        {% endblock %}
+        {% comment %} <script src="" async defer></script> {% endcomment %}
+        <script>
+            console.log('yes');
+            const followerbox = document.querySelector('.followerbox');
+
+            document.addEventListener('mousemove', function(e){
+                followerbox.style.display='block';
+                var mouseX = e.clientX - 17;
+                var mouseY = e.clientY - 13;
+
+                followerbox.style.top=mouseY+'px';
+                followerbox.style.left=mouseX+'px';
+
+            });
+
+            
+        </script>
+    </body>
+
+</html>
