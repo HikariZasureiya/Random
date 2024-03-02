@@ -1,1 +1,30 @@
-<p>verify please</p>
+{% extends "index.html" %}
+
+{% load static %}
+
+<body>
+    {% block content %}
+        <div class='followerbox'>
+        </div>
+        <div class='signupbox'>
+    
+            <div class='signupform'>
+                <form class='signupform1' method="post">
+                        {% csrf_token %}
+                        <div class="login-field">
+                            
+                            <div class='field'>
+                               
+                                <input type="text" placeholder="otp" name="otp">
+                            </div>
+                    
+                        </div>
+    
+                </form>
+            </div>
+        </div>
+    
+       
+    
+    {% endblock %}
+    </body>

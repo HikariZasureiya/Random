@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
 from room.models import online
-# from .models import pim
+from .models import cred
 from .forms import signinform, loginform
 
 
@@ -16,7 +16,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
-
+from django.urls import reverse
 #from django.http import HttpResponse
 
 from room.views import mainroom
@@ -30,33 +30,61 @@ from django.utils.encoding import force_bytes, force_str
 from django.shortcuts import redirect, render
 from django.core.mail import send_mail
 from django.contrib import messages
+import pyotp
+
 
 User = get_user_model()
 
+
 def send_verification_email(user):
-    token = default_token_generator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    verification_url = f"http://random-uo5k.onrender.com/verify/{uid}/{token}/"
-    subject = 'Verify your email'
-    message = f'Hello {user.username} Click the link below to verify your email: {verification_url}'
+    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+
+    # Generate OTP
+    base32secret3232 = pyotp.random_base32()
+    otp = pyotp.TOTP(base32secret3232, interval=600, digits=6)
+    otp_val = otp.now()
+    user.save()
+
+    auser = cred.objects.create(otp_secret=base32secret3232,username=user.username)
+    auser.save()
+    
+
+    subject = 'verification OTP'
+    message = f'Hello {user.username}. your One Time Password (OTP) is: {otp_val}. \n this OTP will expire in 10 minutes. \n DO NOT  share your password with anyone.'
     recipient_email = user.email
     send_mail(subject, message, 'modnar694200@gmail.com', [recipient_email])
 
-def verify_email(request, uidb64, token):
 
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+def verify_email(request, uidb64):
+    if request.method == 'POST':
+        otp = request.POST.get('otp', None)
+        if otp:
+            try:
+                
+                uid = force_str(urlsafe_base64_decode(uidb64))
+                user = User.objects.get(pk=uid)
 
-    if user and default_token_generator.check_token(user, token):
-        user.is_active = True  
-        user.save()
-        return redirect('verification_success')
+                username = user.username
+                
+                cred_instance = cred.objects.get(username=username)
+                otp_verified = pyotp.TOTP(cred_instance.otp_secret, interval=600, digits=6).verify(otp)
+
+
+                if otp_verified:
+                    
+                    user.is_active = True
+                    user.save()
+                    return HttpResponse('Email verification successful. You can now log in.')
+                else:
+                    return HttpResponse('Invalid OTP. Please try again.')
+            except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+                return HttpResponse('Invalid user ')
     else:
-        return redirect('verification_failed')
-    
+        return render(request, 'verify.html')
+
+
+
+
 
 def verification_success(request):
     return render(request,'is_verified.html')
@@ -66,8 +94,9 @@ def failed_verification(request):
     return render(request,'failed_verification.html')
 
 
-def verify(request):
-    return render(request,'verify.html')
+# def verify(request):
+    
+#     return render(request,'verify.html')
 
 
 
@@ -89,7 +118,12 @@ def signup(request):
                 auser.save()
 
                 send_verification_email(auser)
-                return redirect('signin')
+
+                uidb64 = urlsafe_base64_encode(force_bytes(auser.pk))
+                verification_url = reverse('verify_email', kwargs={'uidb64': uidb64})
+                
+                return redirect(verification_url)
+
             except:
                 print('no')
     else:
@@ -128,7 +162,7 @@ def signin(request):
                     print('Invalid credentials')
                     the_form = loginform()
                     messages.error(request, "Wrong credentials")
-                    # return redirect('verify')
+
             except:
                 print('Invalid credentials')
                 the_form = loginform()

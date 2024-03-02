@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-# from lsystem.models import pim
+from lsystem.models import cred
 
-# admin.site.register(pim)
+admin.site.register(cred)
