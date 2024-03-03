@@ -256,6 +256,7 @@ def forgot_password(request):
 
 
 def reset_password(request, username , uidb64):
+    
     if request.method == 'POST':
         the_form=resetform(request.POST)
         if the_form.is_valid():
