@@ -295,7 +295,7 @@ margin-bottom: 50px;
 
 @media only screen and (max-width: 600px) {
     .signupbox{
-        height:60%;
+        height:70%;
         width:30%;
         /* background-color: blue; */
         margin-right: 50%;
@@ -305,7 +305,7 @@ margin-bottom: 50px;
         background-color: beige;
     }
     .signupform{
-        min-height: 400px;
+        min-height: 600px;
         min-width: 350px;
 
     }
