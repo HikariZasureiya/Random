@@ -18,25 +18,46 @@
                 height:100vh;
                 width:100vw;
             }
+
+
+            @media only screen and (max-width: 600px) {
+                .options{
+                    flex-direction: column;
+                }
+
+                .heading{
+                    font-size: 80px;
+                    /* background-color: blue; */
+                    text-align: center;
+                }
+
+
+            }
         </style>
         {% endblock bodystyle %}
 
 
         <link rel="stylesheet" href="{% static 'homepage.css' %}">
     </head>
-       
+    background-color: lightblue;     
     <body>
 
+        
+
         {% block  content %}
+        <!-- <div class="nav" style="background-color:black;
+        width: 100vw; height: 50px;" 
+        ></div> -->
+
         <div class='followerbox'>
         </div>
 
         <div class='bigspace'>
             <div class='blo'>
                 <div class='con'>
-                    <h>RANDOM</h>
+                    <h class='heading'>RANDOM</h>
                 </div>
-                <h class=>Just a random chatroom</h> 
+                <h>Just a random chatroom</h> 
                 <div class='options'>
                     <div>
                         <button class="credbutton" onclick="window.location.href='/signup'">Sign Up</button>

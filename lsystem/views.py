@@ -244,19 +244,21 @@ def forgot_password(request):
         
     try:
         user1 = User.objects.get(username=stripped_username)
+    except:
+        HttpResponse("user doesn't exist")
+
         send_verification_forgot(user1)
         uidb64 = urlsafe_base64_encode(force_bytes(user1.pk))
         verification_url = reverse('pass_reset', kwargs={'username':username,'uidb64': uidb64})
                 
         return redirect(verification_url)
-    except:
-        HttpResponse("user doesn't exist")
+   
 
     return render(request, "forgot.html")
 
 
 def reset_password(request, username , uidb64):
-    
+
     if request.method == 'POST':
         the_form=resetform(request.POST)
         if the_form.is_valid():

@@ -23,19 +23,28 @@
         <div class='signupbox'>
     
             <div class='signupform'>
+               
                 <form class='signupform1' method="post">
                         {% csrf_token %}
                         <div class="login-field">
                             
+                            <!-- <div class='enquiry'>
+                                <h>Please check your email for the verification OTP.</h>
+                                <h>check your spam folder just in case if you can't find it</h>
+                            </div> -->
+
+                            
                             <div class='field'>
-                               
-                                <input type="text" placeholder="otp" name="otp" class="inputclass">
+                                <input type="text" placeholder="OTP" name="otp" class="inputclass" id="otp">
                             </div>
                     
                         </div>
     
                 </form>
+                <!-- <h style="text-align: center;">Please check your email for the verification OTP.</h> -->
+                <!-- <h style="text-align: center;">check your spam folder just in case if you can't find it</h> -->
             </div>
+            
         </div>
     
        
