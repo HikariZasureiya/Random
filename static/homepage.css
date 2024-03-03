@@ -217,6 +217,7 @@ margin-bottom: 50px;
 
 
 
+
 .field .inputclass:focus{
     color:orange;
     border-bottom: 1px solid orange;
@@ -235,7 +236,11 @@ margin-bottom: 50px;
     display:none;
 }
 
-/* profile css */
+.credbutton{
+    width: 100px;
+}
+
+/* profile css
 
 .user{
     border:1px solid cyan;
@@ -286,4 +291,31 @@ margin-bottom: 50px;
     width:100%;
     text-align: center;
     padding:10px;
+} */
+
+@media only screen and (max-width: 600px) {
+    .signupbox{
+        height:60%;
+        width:30%;
+        /* background-color: blue; */
+        margin-right: 50%;
+    }
+
+    body{
+        background-color: beige;
+    }
+    .signupform{
+        min-height: 400px;
+        min-width: 350px;
+
+    }
+
+    .forgot{
+        font-size: 15px;;
+    }
+
+    .enquiry{
+        font-size: 16px;
+    }
+
 }
