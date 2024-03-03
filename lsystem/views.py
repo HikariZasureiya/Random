@@ -242,17 +242,15 @@ def forgot_password(request):
         username = request.POST.get('forgot',None)
         stripped_username=username.strip()
         
-    try:
-        user1 = User.objects.get(username=stripped_username)
-    except:
-        HttpResponse("user doesn't exist")
-
-        send_verification_forgot(user1)
-        uidb64 = urlsafe_base64_encode(force_bytes(user1.pk))
-        verification_url = reverse('pass_reset', kwargs={'username':username,'uidb64': uidb64})
+        try:
+            user1 = User.objects.get(username=stripped_username)
+            send_verification_forgot(user1)
+            uidb64 = urlsafe_base64_encode(force_bytes(user1.pk))
+            verification_url = reverse('pass_reset', kwargs={'username':username,'uidb64': uidb64})
                 
-        return redirect(verification_url)
-   
+            return redirect(verification_url)
+        except:
+            return HttpResponse("user doesn't exist")
 
     return render(request, "forgot.html")
 
