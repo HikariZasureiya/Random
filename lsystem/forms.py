@@ -25,4 +25,13 @@ class loginform(forms.Form):
                 widget=forms.PasswordInput(attrs={'id': 'id_password', 'class': 'inputclass', 'placeholder': 'Enter password'})
         )
 
+class resetform(forms.Form):
+    otp = forms.CharField(max_length=100,initial='',
+            widget=forms.TextInput(attrs={'id': 'id_otp', 'class': 'inputclass', 'placeholder': 'otp'}
+        ))
+    
+    password = forms.CharField(initial='',
+                widget=forms.PasswordInput(attrs={'id': 'id_password', 'class': 'inputclass', 'placeholder': 'Enter password'})
+        )
+
     

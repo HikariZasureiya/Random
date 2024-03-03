@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib import messages
 from room.models import online
 from .models import cred
-from .forms import signinform, loginform
+from .forms import signinform, loginform , resetform
 
 
 from django.contrib.auth.tokens import default_token_generator
@@ -43,10 +43,14 @@ def send_verification_email(user):
     base32secret3232 = pyotp.random_base32()
     otp = pyotp.TOTP(base32secret3232, interval=600, digits=6)
     otp_val = otp.now()
-    user.save()
-
-    auser = cred.objects.create(otp_secret=base32secret3232,username=user.username)
-    auser.save()
+    # user.save()
+    try:
+        user1 = cred.objects.get(username=user.username)
+        user1.otp_secret=base32secret3232
+        user1.save()
+    except:
+        auser = cred.objects.create(otp_secret=base32secret3232,username=user.username)
+        auser.save()
     
 
     subject = 'verification OTP'
@@ -55,7 +59,31 @@ def send_verification_email(user):
     send_mail(subject, message, 'modnar694200@gmail.com', [recipient_email])
 
 
-def verify_email(request, uidb64):
+def send_verification_forgot(user):
+    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+
+    # Generate OTP
+    
+    base32secret3232 = pyotp.random_base32()
+    otp = pyotp.TOTP(base32secret3232, interval=600, digits=6)
+    otp_val = otp.now()
+    user.save()
+    try:
+        auser = cred.objects.get(username=user.username)
+        auser.otp_ver=base32secret3232
+        auser.save()
+    except cred.DoesNotExist:
+        pass
+
+    
+
+    subject = 'Password reset OTP'
+    message = f'Hello {user.username}. your One Time Password (OTP) is: {otp_val}. \n this OTP will expire in 10 minutes. \n DO NOT  share your password with anyone.'
+    recipient_email = user.email
+    send_mail(subject, message, 'modnar694200@gmail.com', [recipient_email])
+
+
+def verify_email(request, username, uidb64):
     if request.method == 'POST':
         otp = request.POST.get('otp', None)
         if otp:
@@ -64,7 +92,7 @@ def verify_email(request, uidb64):
                 uid = force_str(urlsafe_base64_decode(uidb64))
                 user = User.objects.get(pk=uid)
 
-                username = user.username
+                # username = user.username
                 
                 cred_instance = cred.objects.get(username=username)
                 otp_verified = pyotp.TOTP(cred_instance.otp_secret, interval=600, digits=6).verify(otp)
@@ -81,6 +109,9 @@ def verify_email(request, uidb64):
                 return HttpResponse('Invalid user ')
     else:
         return render(request, 'verify.html')
+
+
+
 
 
 
@@ -120,7 +151,7 @@ def signup(request):
                 send_verification_email(auser)
 
                 uidb64 = urlsafe_base64_encode(force_bytes(auser.pk))
-                verification_url = reverse('verify_email', kwargs={'uidb64': uidb64})
+                verification_url = reverse('verify_email', kwargs={'username':username,'uidb64': uidb64})
                 
                 return redirect(verification_url)
 
@@ -157,7 +188,13 @@ def signin(request):
                         
                     else:
                         print("User is not verified")
-                        return redirect('verify')
+                        send_verification_email(user1)
+
+                        uidb64 = urlsafe_base64_encode(force_bytes(user1.pk))
+                        verification_url = reverse('verify_email', kwargs={'username':username,'uidb64': uidb64})
+                
+                        return redirect(verification_url)
+                        #return redirect('verify')
                 else:
                     print('Invalid credentials')
                     the_form = loginform()
@@ -169,6 +206,7 @@ def signin(request):
                 messages.error(request, "Wrong credentials")
         else:
             print('Invalid form data')
+
             messages.error(request, "Invalid form data")
     else:
         the_form = loginform()
@@ -198,3 +236,63 @@ def usernamecheck(request):
 
 def home(request):
     return render(request, "index.html")
+
+def forgot_password(request):
+    if request.method=='POST':
+        username = request.POST.get('forgot',None)
+        stripped_username=username.strip()
+        
+    try:
+        user1 = User.objects.get(username=stripped_username)
+        send_verification_forgot(user1)
+        uidb64 = urlsafe_base64_encode(force_bytes(user1.pk))
+        verification_url = reverse('pass_reset', kwargs={'username':username,'uidb64': uidb64})
+                
+        return redirect(verification_url)
+    except:
+        HttpResponse("user doesn't exist")
+
+    return render(request, "forgot.html")
+
+
+def reset_password(request, username , uidb64):
+    if request.method == 'POST':
+        the_form=resetform(request.POST)
+        if the_form.is_valid():
+            otp = the_form.cleaned_data['otp']
+            password = the_form.cleaned_data['password']
+
+            if otp:
+                try:
+                    
+                    uid = force_str(urlsafe_base64_decode(uidb64))
+                    user = User.objects.get(pk=uid)
+
+                    # username = user.username    
+                
+                    cred_instance = cred.objects.get(username=username)
+                    otp_verified = pyotp.TOTP(cred_instance.otp_ver, interval=600, digits=6).verify(otp)
+                    
+
+                    if otp_verified:
+                        user.set_password(password)
+                        user.save()
+                        return HttpResponse("successful")
+                    else:
+                        return HttpResponse("invalid otp")
+                
+                except:
+                    return HttpResponse("something went wrong")
+    else:
+        the_form = resetform()
+    
+    return render(request, "reset.html", {'form': the_form})
+    
+
+            
+
+    
+
+
+    
+
