@@ -36,6 +36,8 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com','https://*.127.0.0.1']
+
 
 # Application definition
 
