@@ -1,6 +1,9 @@
+# import django
+
 from django.db import models
 from django.utils import timezone
 
+# django.setup()
 class messaging(models.Model):
     user=models.CharField(max_length=15)
     message= models.CharField(max_length=2000)
