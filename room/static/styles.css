@@ -377,5 +377,20 @@ h{
         margin-bottom: 5px;
 
     }
+
+    #online{
+        width:70%;
+    }
+
+    #currentuser img{
+
+        width:30px;
+        height:30px;
+        border-radius: 5px;
+        object-fit: contain;
+        margin-left: 10px;
+        /* border: 1px solid green; */
+    }
+
 }
 
