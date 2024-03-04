@@ -177,7 +177,7 @@ h{
     position: relative;
     width: 100%;
     /* background-color: blue; */
-    width: 1000px;
+    /* width: 1000px; */
     height:70px;
     overflow:hidden;
     display: flex;
@@ -339,7 +339,7 @@ h{
     border-radius: 5px;
     object-fit: contain;
     margin-left: 10px;
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 /* .useroptionbox{
@@ -369,4 +369,13 @@ h{
     margin-left: 25px;
 }
 
+
+@media only screen and (max-width: 600px) {
+    
+    #mainarea{
+        width:300px;
+        margin-bottom: 5px;
+
+    }
+}
 
