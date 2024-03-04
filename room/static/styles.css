@@ -392,5 +392,9 @@ h{
         /* border: 1px solid green; */
     }
 
+    /* #chatspace{ */
+        #container{
+            height: 83vh;
+}
 }
 
